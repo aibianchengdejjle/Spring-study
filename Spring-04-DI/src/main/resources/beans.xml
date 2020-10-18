@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+    <bean id="address" class="com.jjl.pojo.Address">
+        <property name="address" value="成都"></property>
+    </bean>
+    <bean id="student" class="com.jjl.pojo.Student">
+<!--        第一种普通注入-->
+         <property name="name" value="jjl"></property>
+<!--        第二种用ref来进行注入-->
+        <property name="address" ref="address"></property>
+<!--       数组注入 -->
+        <property name="book">
+            <array>
+                <value>红楼梦</value>
+                <value>水浒传</value>
+                <value>三国演义</value>
+            </array>
+        </property>
+<!--        List注入-->
+        <property name="hobbys">
+          <list>
+              <value>1</value>
+              <value>2</value>
+              <value>3</value>
+          </list>
+        </property>
+<!--        map注入-->
+        <property name="card">
+            <map>
+                <entry key="1" value="123456"></entry>
+            </map>
+        </property>
+<!--        Set-->
+        <property name="game">
+            <set>
+                <value>lol</value>
+                <value>lol</value>
+            </set>
+        </property>
+<!--        null注入-->
+        <property name="wife">
+            <null></null>
+        </property>
+<!--        property注入-->
+        <property name="info">
+            <props>
+                <prop key="root">root</prop>
+            </props>
+        </property>
+     </bean>
+</beans>

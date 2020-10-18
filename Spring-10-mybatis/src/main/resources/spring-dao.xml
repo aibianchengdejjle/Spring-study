@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="GBK"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop
+        http://www.springframework.org/schema/aop/spring-aop.xsd">
+    <bean id="datasource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName"  value="com.mysql.jdbc.Driver"></property>
+        <property name="url" value="jdbc:mysql://localhost:3306/mybatis?useUnicode=true&amp;characterEncoding=utf-8"></property>
+        <property name="username" value="root"></property>
+        <property name="password" value="a654320a"></property>
+    </bean>
+<!--   创建工厂 SqlsessionFactory-->
+        <bean id="sqlSessionFactory"  class="org.mybatis.spring.SqlSessionFactoryBean">
+            <property name="dataSource"  ref="datasource"></property>
+<!--            mybatis-->
+            <property name="configLocation" value="classpath:mybatis-config.xml"></property>
+        </bean>
+    <bean id="sqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+<!--      通过构造器来注入constructor-->
+        <constructor-arg index="0" ref="sqlSessionFactory"></constructor-arg>
+    </bean>
+<!--    开启 transactionManger-->
+    <bean id="transactionManger" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="datasource"></property>
+    </bean>
+    <tx:advice id="txAdvice" transaction-manager="transactionManger">
+    <tx:attributes>
+        <tx:method name="add" propagation="REQUIRED"/>
+        <tx:method name="delete" propagation="REQUIRED"/>
+        <tx:method name="query" read-only="true"/>
+        <tx:method name="update" propagation="REQUIRED"/>
+        <tx:method name="*" propagation="REQUIRED"/>
+    </tx:attributes>
+</tx:advice>
+<!--    寻找切入点给他切进去-->
+    <aop:config>
+        <aop:pointcut id="txPonintcut" expression="execution(* com.jjl.Dao.*.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPonintcut"></aop:advisor>
+    </aop:config>
+
+
+</beans>

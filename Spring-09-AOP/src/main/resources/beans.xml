@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/aop https://www.springframework.org/schema/aop/spring-aop.xsd">
+    <context:component-scan base-package="com.jjl"></context:component-scan>
+    <!--    注册-->
+    
+    <bean id="log" class="com.jjl.log.Log"></bean>
+    <bean id="userService" class="com.jjl.service.UserServiceImpl"></bean>
+    <bean id="diy" class="com.jjl.diy.Diy"/>
+    
+<!--   方式一 使用aop-->
+<!--    <aop:config>-->
+<!--        <aop:pointcut id="pointcut" expression="execution(* com.jjl.service.UserServiceImpl.*(..))"/>-->
+<!--        <aop:advisor advice-ref="log" pointcut-ref="pointcut"></aop:advisor>-->
+<!--    </aop:config>-->
+<!--    方式二-->
+<!--    <aop:config>-->
+<!--&lt;!&ndash;        自定义切面 ref引入的切面&ndash;&gt;-->
+<!--        <aop:aspect ref="diy">-->
+<!--            <aop:pointcut id="pointcut" expression="execution(* com.jjl.service.UserServiceImpl.*(..))"/>-->
+<!--            <aop:before method="before" pointcut-ref="pointcut"></aop:before>-->
+<!--            <aop:after method="after" pointcut-ref="pointcut"></aop:after>-->
+<!--        </aop:aspect>-->
+<!--    </aop:config>-->
+<!--    方式三使用注解开发-->
+     <bean id="autodiy" class="com.jjl.diy.AutoDiy"/>
+    <aop:aspectj-autoproxy/>
+
+</beans>

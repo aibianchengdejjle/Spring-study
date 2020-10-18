@@ -1,0 +1,10 @@
+# Project exclude paths
+/Spring-01-IOC/target/
+/Spring-02-HelloSpring/target/
+/Spring-04-DI/target/
+/Spring-05-auto/target/
+/Spring-06-anno/target/
+/Spring-07-appConfig/target/
+/Spring-08-Poxoy/target/
+/Spring-09-AOP/target/
+/Spring-10-mybatis/target/
